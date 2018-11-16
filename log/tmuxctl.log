@@ -1,0 +1,130 @@
+       [debug(50)]>  cmd: 'list-sessions 2>&1', args: '[]', session: 'nil'                                                
+       [debug(10)]>  tmux -v list-sessions 2>&1                                                                           
+       [debug(50)]>  no server running on /run/tmux/1000/default                                                          
+        [debug(1)]>  exit-code: pid 8232 exit 1                                                                           
+       [debug(10)]>  --- {}                                                                                               
+       [debug(50)]>  cmd: 'new -s whoa', args: '[]', session: '"whoa"'                                                    
+       [debug(10)]>  tmux -v new -s whoa                                                                                  
+       [debug(50)]>  [exited]                                                                                             
+        [debug(1)]>  exit-code: pid 8234 exit 0                                                                           
+       [debug(50)]>  cmd: 'attach', args: '[]', session: '"whoa"'                                                         
+       [debug(10)]>  tmux -v attach -t whoa                                                                               
+        [debug(1)]>  exit-code: pid 8602 exit 1                                                                           
+       [debug(50)]>  cmd: 'list-sessions 2>&1', args: '[]', session: 'nil'                                                
+       [debug(10)]>  tmux -v list-sessions 2>&1                                                                           
+       [debug(50)]>  no server running on /run/tmux/1000/default                                                          
+        [debug(1)]>  exit-code: pid 9068 exit 1                                                                           
+       [debug(10)]>  --- {}                                                                                               
+       [debug(50)]>  cmd: 'attach', args: '[]', session: '"whoa"'                                                         
+       [debug(50)]>  cmd: 'new -s whoa', args: '[]', session: '"whoa"'                                                    
+       [debug(50)]>  cmd: 'list-sessions 2>&1', args: '[]', session: 'nil'                                                
+       [debug(10)]>  tmux -v attach -t whoa                                                                               
+       [debug(10)]>  tmux -v new -s whoa                                                                                  
+       [debug(10)]>  tmux -v list-sessions 2>&1                                                                           
+       [debug(50)]>  whoa: 1 windows (created Tue Mar 20 10:39:27 2018) [321x73] (attached)                               
+        [debug(1)]>  exit-code: pid 9074 exit 0                                                                           
+       [debug(50)]>  cmd: 'list-windows -t whoa', args: '[]', session: 'nil'                                              
+       [debug(10)]>  tmux -v list-windows -t whoa                                                                         
+       [debug(50)]>  0: bash* (1 panes) [321x73] [layout bdbd,321x73,0,0,0] @0 (active)                                   
+        [debug(1)]>  exit-code: pid 9083 exit 0                                                                           
+       [debug(50)]>  cmd: 'list-panes', args: '[]', session: '"0"'                                                        
+       [debug(10)]>  tmux -v list-panes -t 0                                                                              
+       [debug(50)]>  0: [321x73] [history 0/2000, 0 bytes] %0 (active)                                                    
+        [debug(1)]>  exit-code: pid 9090 exit 0                                                                           
+        [debug(1)]>                                                                                                       
+       [debug(10)]>  ---                                                                                                  
+       [debug(10)]>  whoa:                                                                                                
+       [debug(10)]>    :window_count: '1'                                                                                 
+       [debug(10)]>    :windows:                                                                                          
+       [debug(10)]>      '0':                                                                                             
+       [debug(10)]>        :pane_count: '1'                                                                               
+       [debug(10)]>        :name: bash*                                                                                   
+       [debug(10)]>        :active: true                                                                                  
+       [debug(10)]>        :panes:                                                                                        
+       [debug(10)]>          '0':                                                                                         
+       [debug(10)]>            :size: 321x73                                                                              
+       [debug(10)]>            :active: true                                                                              
+       [debug(10)]>  tmux -v list-sessions 2>&1                                                                           
+       [debug(10)]>  tmux -v list-windows -t whoa                                                                         
+       [debug(10)]>  tmux -v list-panes -t 0                                                                              
+        [debug(1)]>                                                                                                       
+       [debug(10)]>  ---                                                                                                  
+       [debug(10)]>  whoa:                                                                                                
+       [debug(10)]>    :window_count: '1'                                                                                 
+       [debug(10)]>    :windows:                                                                                          
+       [debug(10)]>      '0':                                                                                             
+       [debug(10)]>        :pane_count: '1'                                                                               
+       [debug(10)]>        :name: bash*                                                                                   
+       [debug(10)]>        :active: true                                                                                  
+       [debug(10)]>        :panes:                                                                                        
+       [debug(10)]>          '0':                                                                                         
+       [debug(10)]>            :size: 321x73                                                                              
+       [debug(10)]>            :active: true                                                                              
+        [debug(1)]>  sessions: {"whoa"=>{:window_count=>"1", :windows=>{"0"=>{:pane_count=>"1", :name=>"bash*", :active=>true, :panes=>{"0"=>{:size=>"321x73", :active=>true}}}}}} 
+        [debug(1)]>  session:whoa                                                                                         
+        [debug(1)]>  last window: ["0"]                                                                                   
+       [debug(10)]>  tmux -v new-window -t whoa -a -n 'whoa-1'                                                            
+       [debug(10)]>  tmux -v split-window -t whoa:1.0                                                                     
+       [debug(10)]>  tmux -v split-window -t whoa:1.0                                                                     
+       [debug(10)]>  tmux -v split-window -t whoa:1.0                                                                     
+       [debug(10)]>  tmux -v select-layout -t whoa:1 main-horizontal                                                      
+       [debug(50)]>  cmd: 'list-sessions 2>&1', args: '[]', session: 'nil'                                                
+       [debug(10)]>  tmux -v list-sessions 2>&1                                                                           
+       [debug(50)]>  no server running on /run/tmux/1000/default                                                          
+        [debug(1)]>  exit-code: pid 10116 exit 1                                                                          
+       [debug(10)]>  --- {}                                                                                               
+       [debug(50)]>  cmd: 'new -s whoa', args: '[]', session: '"whoa"'                                                    
+       [debug(50)]>  cmd: 'list-sessions 2>&1', args: '[]', session: 'nil'                                                
+       [debug(50)]>  cmd: 'attach', args: '[]', session: '"whoa"'                                                         
+       [debug(10)]>  tmux -v new -s whoa                                                                                  
+       [debug(10)]>  tmux -v list-sessions 2>&1                                                                           
+       [debug(10)]>  tmux -v attach -t whoa                                                                               
+       [debug(50)]>  [lost server]                                                                                        
+        [debug(1)]>  exit-code: pid 10120 exit 1                                                                          
+       [debug(50)]>  whoa: 1 windows (created Tue Mar 20 10:44:16 2018) [321x73] (attached)                               
+        [debug(1)]>  exit-code: pid 10121 exit 0                                                                          
+       [debug(50)]>  cmd: 'list-windows -t whoa', args: '[]', session: 'nil'                                              
+       [debug(10)]>  tmux -v list-windows -t whoa                                                                         
+       [debug(50)]>  0: bash* (1 panes) [321x73] [layout bdbd,321x73,0,0,0] @0 (active)                                   
+        [debug(1)]>  exit-code: pid 10137 exit 0                                                                          
+       [debug(50)]>  cmd: 'list-panes', args: '[]', session: '"0"'                                                        
+       [debug(10)]>  tmux -v list-panes -t 0                                                                              
+       [debug(50)]>  0: [321x73] [history 0/2000, 0 bytes] %0 (active)                                                    
+        [debug(1)]>  exit-code: pid 10138 exit 0                                                                          
+        [debug(1)]>                                                                                                       
+       [debug(10)]>  ---                                                                                                  
+       [debug(10)]>  whoa:                                                                                                
+       [debug(10)]>    :window_count: '1'                                                                                 
+       [debug(10)]>    :windows:                                                                                          
+       [debug(10)]>      '0':                                                                                             
+       [debug(10)]>        :pane_count: '1'                                                                               
+       [debug(10)]>        :name: bash*                                                                                   
+       [debug(10)]>        :active: true                                                                                  
+       [debug(10)]>        :panes:                                                                                        
+       [debug(10)]>          '0':                                                                                         
+       [debug(10)]>            :size: 321x73                                                                              
+       [debug(10)]>            :active: true                                                                              
+       [debug(10)]>  tmux -v list-sessions 2>&1                                                                           
+       [debug(10)]>  tmux -v list-windows -t whoa                                                                         
+       [debug(10)]>  tmux -v list-panes -t 0                                                                              
+        [debug(1)]>                                                                                                       
+       [debug(10)]>  ---                                                                                                  
+       [debug(10)]>  whoa:                                                                                                
+       [debug(10)]>    :window_count: '1'                                                                                 
+       [debug(10)]>    :windows:                                                                                          
+       [debug(10)]>      '0':                                                                                             
+       [debug(10)]>        :pane_count: '1'                                                                               
+       [debug(10)]>        :name: bash*                                                                                   
+       [debug(10)]>        :active: true                                                                                  
+       [debug(10)]>        :panes:                                                                                        
+       [debug(10)]>          '0':                                                                                         
+       [debug(10)]>            :size: 321x73                                                                              
+       [debug(10)]>            :active: true                                                                              
+        [debug(1)]>  sessions: {"whoa"=>{:window_count=>"1", :windows=>{"0"=>{:pane_count=>"1", :name=>"bash*", :active=>true, :panes=>{"0"=>{:size=>"321x73", :active=>true}}}}}} 
+        [debug(1)]>  session:whoa                                                                                         
+        [debug(1)]>  last window: ["0"]                                                                                   
+       [debug(10)]>  tmux -v new-window -t whoa -a -n 'whoa-1'                                                            
+       [debug(10)]>  tmux -v split-window -t whoa:1.0                                                                     
+       [debug(10)]>  tmux -v split-window -t whoa:1.0                                                                     
+       [debug(10)]>  tmux -v split-window -t whoa:1.0                                                                     
+       [debug(10)]>  tmux -v select-layout -t whoa:1 main-horizontal                                                      

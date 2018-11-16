@@ -1,0 +1,106 @@
+#!/usr/bin/env ruby
+#
+#	Setup tmux session with multiple connnections:
+#
+config=File.dirname(File.expand_path(__FILE__))+"/conf/config.rb"
+require config
+
+
+#       Operations: follow_uri, search_app,etc.
+@operations={
+        :user=> {:flag=>"-u",:on=>false,:args=>nil,:arg_count=>1,:description=>"Login user..",:usage=>"-u <username>",:default=>@user,:type=>"set"},
+        :protocol=> {:flag=>"-p",:on=>false,:args=>nil,:arg_count=>1,:description=>"Select connection protocol(ssh|telnet).",:usage=>"-p",:default=>"ssh",:type=>"set"},
+        :commands=> {:flag=>"-c",:on=>false,:args=>nil,:arg_count=>1,:description=>"Issue commands to terminal(s) separate by ','.",:usage=>"-c",:type=>"set"},
+        :sync=> {:flag=>"-S",:on=>false,:args=>nil,:arg_count=>1,:description=>"Sync panes.",:usage=>"-S <true|false>",:default=>@sync_by_default,:values=>[true,false],:eval=>true,:type=>"set"},
+        :connect_to_hostlist=> {:flag=>"-h",:on=>false,:args=>nil,:arg_count=>1,:description=>"Connect to host list, separate hosts by ',' no spaces",:usage=>"-h <host1>[,host2,host3...]>",:type=>"set"},
+	:load_profile => {:flag=>"-l",:on=>false,:args=>nil,:arg_count=>1,:description=>"Load tmux profile from yaml(s) ()",:usage=>"-l <name>[,name2,name3...]",:type=>"set"},
+	:list_running => {:flag=>"-L",:on=>false,:args=>nil,:arg_count=>0,:description=>"List running tmux sessions, windows, panes.",:usage=>"-L ",:type=>"action"},
+	:save_profile => {:flag=>"-sp",:on=>false,:args=>nil,:arg_count=>1,:description=>"Save tmux profile to yaml (name.yml)",:usage=>"-sp <name>",:type=>"set"},
+	:session => {:flag=>"-s",:on=>false,:args=>nil,:arg_count=>1,:description=>"Session options: name of existing session, if not there make one by this name.",:usage=>"-s <name>",:default=>:new,:type=>"set"},
+	:window => {:flag=>"-w",:on=>false,:args=>nil,:arg_count=>1,:description=>"Window options: new window, replace existing window, use panes in all windows",:usage=>"-w <nw|rw:[window_name]|aw>",:default=>"nw",:type=>"set"},
+        :usage=> {:flag=>"-help",:on=>false,:args=>nil,:arg_count=>0,:description=>"This help message.",:usage=>"-help",:type=>"action"}
+        }
+flags=[]
+@operations.keys.each {|k| flags<<@operations[k][:flag]}
+#
+def usage(error=false,todo=true,incomplete=false)
+	puts error if error!=false
+	puts "no operation selected." if error==false
+	puts "no operation to do." if !todo
+	puts "option #{incomplete}" if incomplete!=false
+        puts $0 + " [at least one option]"
+        @operations.keys.collect {|i| i.to_s}.sort {|x,y| @operations[x.to_sym][:flag].downcase<=> @operations[y.to_sym][:flag].downcase}.each do |key| 
+                printf("%-10s %-20s %-40s\n","",@operations[key.to_sym][:usage],@operations[key.to_sym][:description])
+                end
+        exit
+end
+#
+
+skip_to=-1
+follow,appdir,search,restart=false
+        #
+ARGV.each_index do |ind|
+        arg=ARGV[ind]
+        next if ind<skip_to
+        skip_to=-1
+                #
+        match=false
+        op=nil
+        @operations.keys.each do |key|
+                next if @operations[key][:flag]!=arg
+                match=true
+                op=key
+                end
+        usage("unknown op '#{arg}'") if !match
+        usage("Usage:") if op==:usage
+                #
+        @operations[op][:on]=true
+        if @operations[op][:arg_count]>=1
+                @operations[op][:args]=[]
+                1.upto(@operations[op][:arg_count]) {|i| @operations[op][:args]<< ARGV[ind+i] if !ARGV[ind+i].nil? }
+                skip_to=ind+@operations[op][:arg_count]+1
+        else
+                @operations[op][:args]=nil
+                end
+        end
+something2do,incomplete=false,false
+@operations.keys.each {|k| something2do=true if @operations[k][:on]==true}
+@operations.keys.each {|k| incomplete=k.to_s if @operations[k][:on] and @operations[k][:arg_count]>0 and @operations[k][:args].length!=@operations[k][:arg_count]}
+usage(something2do,incomplete) if !something2do or incomplete!=false
+
+#
+#
+#
+@cli_settings={}
+@operations.keys.each do |k| 
+	#puts "looking at : #{k.inspect}"
+	#next if @operations[k][:type]!="set"
+	if @operations[k][:arg_count]==0
+		if @operations[k][:on]==true
+			@cli_settings[k]=true
+			end
+	elsif @operations[k][:arg_count]>0
+		if !@operations[k][:default].nil? and @operations[k][:args].nil?
+			@cli_settings[k]=@operations[k][:default]
+			end
+		if @operations[k][:on]
+			@operations[k][:args]=(@operations[k][:eval]) ? eval(@operations[k][:args].first) : @operations[k][:args] 
+			usage("invalid value '#{@operations[k][:args]}'") if !@operations[k][:values].nil? and !@operations[k][:values].include? @operations[k][:args]
+			@cli_settings[k]=@operations[k][:args]
+			end
+		end	
+	end
+
+#
+#
+#
+puts @cli_settings.inspect
+
+@tm=TmuxCTL.new("whoa",@data_path)
+@tm.debug_level=@debug_level
+@tm.get_sessions
+@tm.default_layout=@default_layout
+#@tm.tm_name=@tm_name if !@tm_name.nil? and !@tm_name.empty?
+#puts @tm.sessions.inspect
+#
+@tm.test(1)
